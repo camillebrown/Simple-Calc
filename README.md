@@ -14,57 +14,84 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
+# Lab: Simple Calc
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Now, it's time for you to check back on everything! You will be building a calculator with React, and only minimal instructions have been provided for you to really think about what's happening.
 
-### `npm run build`
+At first, your calculator will just add 2 numbers together when they are typed in. For the bonus, you might decide to get more creative.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Set Up
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Like usual, use `create-react-app` to make a new project.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Step 1
 
-### `npm run eject`
+Start by creating a single component file in the `src` directory, and name it `Calculator.js`. In this file, create your `Calculator` class. Use the `App.js` as an example of how to create a basic component. Add the following JSX to your Calculator's `render()` function:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```markup
+<div className="container">
+  <h1>Add with React!</h1>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  <div className="add">
+    <input type="text" />
+    <span>+</span>
+    <input type="text" />
+    <button>=</button>
+    <h3>Addition results go here!</h3>
+  </div>
+</div>
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Step 2
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Set up the initial state of your component. What state attributes will you need to track? What values should those state items start with? Where is that state displayed in the browser?
 
-## Learn More
+> Hint: You will only need one state. That one state can hold as many key-value pairs as you need!
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Step 3
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+You will want to trigger a function when the values in your textboxes change. You can capture these values by setting a function on the onChange property. Let's say I have a textbox tracking my first number.
 
-### Code Splitting
+```text
+<input type="number"
+  name="num1"
+  placeholder="Enter your first number"
+  value={this.state.num1}
+  onChange={ (e) => this.setNum(e, 'num1') }
+/>
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+I want to store this number as part of my state. Let's say I decided to call it `num1`. I could set my state like so:
 
-### Analyzing the Bundle Size
+```text
+setNum = (e, num) => {
+  this.setState({ [num]: e.target.value});
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+> Hint: The \[\] are there so we can use a dynamic key value! This value becomes `num1` or `num2` depending on what was clicked and sent to the function from `onChange`.
 
-### Making a Progressive Web App
+If you decided to use buttons for your calculator, you probably want to use `onClick` instead of `onChange`, but the concepts are the same! Here is some documentation to help you choose what you want to do and how to do it:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+* [React form documentation](https://facebook.github.io/react/docs/forms.html)
+* [A list of events React supports](https://facebook.github.io/react/docs/events.html#supported-events)
 
-### Advanced Configuration
+## Step 4
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Once you've got your event handlers set up to capture the input, you'll need to create a method for your submit button. The method should accept the triggered event, get the input values from your state, add them together, and set part of the state to the new `sum`.
 
-### Deployment
+Hint: Where should this method go?
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+In the same component as it's being used - between the constructor and the render.
 
-### `npm run build` fails to minify
+> Thought: How will you handle inputs that aren't numbers?
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Step 5
+
+Once the state of the `sum` has been set, React will re-render the whole component. Make sure you have a place in your JSX that displays the result!
+
+## Bonus
+
+* Make the calculator work with any of the 4 basic arithmetic operations
+
+  \(+, -, \*, /\). How will this change your `state` and your JSX?
